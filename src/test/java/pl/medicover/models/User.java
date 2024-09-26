@@ -1,4 +1,4 @@
-package pl.medicover.utils;
+package pl.medicover.models;
 
 public class User {
 
