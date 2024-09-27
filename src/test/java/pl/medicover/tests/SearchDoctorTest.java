@@ -14,6 +14,10 @@ public class SearchDoctorTest extends BaseTest {
                 .goToMedicoverOnline()
                 .goToLogin()
                 .loginUser(user)
-                .clickPopup();
+                .clickPopup()
+                .selectDoctor("Kardiolog")
+                .scheduleFacilityConsulation()
+                .fillAdvancedSearchForm();
+
     }
 }
