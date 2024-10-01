@@ -1,8 +1,10 @@
 package pl.medicover.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -39,5 +41,10 @@ public class LoggedUserPage {
         medicalSpecialtySelect.sendKeys(name, Keys.ENTER);
         searchBtn.click();
         return new DoctorPreselectPage(driver);
+    }
+
+    public void goToCancelAppointment() {
+        Actions action = new Actions(driver);
+        action.moveToElement(visitsDropdown).moveToElement(driver.findElement(By.xpath("//li[@class='current']//ul[@class='dropdown-menu']//li[2]"))).click().build().perform();
     }
 }

@@ -15,11 +15,17 @@ public class VisitsPage {
     @FindBy(xpath = "//button[@class='btn blue' and text()='Szukaj']")
     private WebElement searchBtn;
 
-    @FindBy(xpath = "//app-visit-list//app-slot[1]//div[@class='specialization']")
-    private WebElement visitSlotSpecialization;
-
     @FindBy(xpath = "//app-visit-list//app-slot[1]//button[text()=' Umów ']")
     private WebElement visitSlotBookBtn;
+
+    @FindBy(xpath = "//app-visit-list//app-slot[1]//div[@class='slot-time']")
+    private WebElement visitsSlotTime;
+
+    @FindBy(xpath = "//app-visit-list//app-slot[1]//div[@class='specialization']")
+    private WebElement visitsSlotSpecialization;
+
+    @FindBy(xpath = "//app-visit-list//app-slot[1]//div[@class='clinicName']")
+    private WebElement visitsSlotFacility;
 
     @FindBy(xpath = "//label[text()='Data wizyty od ']/parent::div//input")
     private WebElement datePicker;
@@ -32,7 +38,7 @@ public class VisitsPage {
 
     public String getSpecialization(String text) {
 //        SeleniumHelper.waitForTextToBePresent(visitSlotSpecialization, text, driver);
-        return visitSlotSpecialization.getText();
+        return visitsSlotSpecialization.getText();
     }
 
     public ConfirmAppointmentPage bookAppointment() {
@@ -51,5 +57,17 @@ public class VisitsPage {
         waitForLoadingToFinish();
         searchBtn.click();
         return  this;
+    }
+
+    public String getSpecialization() {
+        return visitsSlotSpecialization.getText();
+    }
+
+    public String getTime() {
+        return visitsSlotTime.getText();
+    }
+
+    public String getFacility() {
+        return visitsSlotFacility.getText();
     }
 }

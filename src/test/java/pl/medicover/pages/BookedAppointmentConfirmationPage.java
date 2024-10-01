@@ -1,6 +1,5 @@
 package pl.medicover.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,8 +15,14 @@ public class BookedAppointmentConfirmationPage {
     @FindBy(xpath = "//div[@class='col-lg-12 visit-date']")
     private WebElement timeAndDate;
 
+    @FindBy(xpath = "//div[@class='visit-content']//div[@class='col-lg-12'][1]")
+    private WebElement specialtyName;
+
+    @FindBy(xpath = "//div[@class='visit-content']//div[@class='col-lg-12'][2]")
+    private WebElement facilityName;
+
     public BookedAppointmentConfirmationPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
@@ -25,9 +30,21 @@ public class BookedAppointmentConfirmationPage {
         return title.getText();
     }
 
-//    public String getAppointmentDetails(String facilityName, String specialtyName) {
-//        return driver.findElement("//div[@class='col-lg-12' and text()='"+ facilityName +"']").getText();
-//        return driver.findElement("//div[@class='col-lg-12' and text()='"+ specialtyName +"']").getText();
-//
-//    }
+    public String getTime() {
+        String time = timeAndDate.getText().split(" ",0)[1];
+        return time;
+    }
+
+    public String getDate() {
+        String date = timeAndDate.getText().split(" ",0)[0];
+        return date;
+    }
+
+    public String getFacilityName() {
+        return facilityName.getText();
+    }
+
+    public String getSpecialization() {
+        return specialtyName.getText();
+    }
 }
