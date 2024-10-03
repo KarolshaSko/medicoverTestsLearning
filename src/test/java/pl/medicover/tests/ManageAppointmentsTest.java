@@ -2,8 +2,7 @@ package pl.medicover.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.medicover.pages.BookedAppointmentConfirmationPage;
-import pl.medicover.pages.VisitsPage;
+import pl.medicover.pages.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,5 +52,9 @@ public class ManageAppointmentsTest extends BaseTest {
 
     @Test
     public void cancelAppointmentTest() {
+        loggedUserPage = new LoggedUserPage(driver);
+        MyVisitsPage myVisitsPage = new MenuPage(driver)
+                .goToCancelAppointment()
+                .cancelAppointment("Punkt Pobrań - dorośli");
     }
 }

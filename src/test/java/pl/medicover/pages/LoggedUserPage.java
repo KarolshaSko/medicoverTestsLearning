@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pl.medicover.utils.SeleniumHelper;
 
 public class LoggedUserPage {
 
@@ -14,9 +15,6 @@ public class LoggedUserPage {
 
     @FindBy(xpath = "//button[text()='Rozumiem']")
     private WebElement popupBtn;
-
-    @FindBy(xpath = "//nav[@class='header navbar navbar-inverse mol-nav']//ul[@class='navbar-nav nav']/li[2]")
-    private WebElement visitsDropdown;
 
     @FindBy(xpath = "//div[@class='ng-input']/input")
     private WebElement medicalSpecialtySelect;
@@ -33,6 +31,7 @@ public class LoggedUserPage {
     }
 
     public LoggedUserPage clickPopup() {
+        SeleniumHelper.waitForElementToBeClickable(popupBtn,driver);
         popupBtn.click();
         return this;
     }
@@ -43,8 +42,4 @@ public class LoggedUserPage {
         return new DoctorPreselectPage(driver);
     }
 
-    public void goToCancelAppointment() {
-        Actions action = new Actions(driver);
-        action.moveToElement(visitsDropdown).moveToElement(driver.findElement(By.xpath("//li[@class='current']//ul[@class='dropdown-menu']//li[2]"))).click().build().perform();
-    }
 }
