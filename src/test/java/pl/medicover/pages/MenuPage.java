@@ -14,6 +14,9 @@ public class MenuPage {
     @FindBy(xpath = "//nav[@class='header navbar navbar-inverse mol-nav']//ul[@class='navbar-nav nav']/li[2]")
     private WebElement visitsDropdown;
 
+    @FindBy(xpath = "//nav[@class='header navbar navbar-inverse mol-nav']//ul[@class='navbar-nav nav']/li[5]")
+    private WebElement myHealthDropdown;
+
     public MenuPage(WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
@@ -24,5 +27,12 @@ public class MenuPage {
         action.moveToElement(visitsDropdown).build().perform();
         driver.findElement(By.xpath("//ul[@class='navbar-nav nav']/li/ul/li/a[text()='Odwołaj wizytę']")).click();
         return new MyVisitsPage(driver);
+    }
+
+    public TestResultsPage goToTestResults() {
+        Actions action = new Actions(driver);
+        action.moveToElement(myHealthDropdown).build().perform();
+        driver.findElement(By.xpath("//ul[@class='navbar-nav nav']/li/ul/li/a[text()='Wyniki badań']")).click();
+        return new TestResultsPage(driver);
     }
 }
