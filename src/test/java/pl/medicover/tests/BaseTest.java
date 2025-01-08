@@ -25,10 +25,8 @@ public class BaseTest {
 
         loggedUserPage = new StartPage(driver).acceptCoockie()
                 .goToMedicoverOnline()
-                .goToLogin()
-                .loginUser(user)
-                .clickPopup();
-    }
+                .acceptCookie()
+                .loginUser(user);}
 
     @AfterMethod
     public void tearDown() {

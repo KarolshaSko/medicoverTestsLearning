@@ -24,10 +24,10 @@ public class SeleniumHelper {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-//    public static void waitForTextToBePresent(WebElement element, String text, WebDriver driver) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
-//    }
+    public static void waitForTextToBePresent(WebElement element, String text, WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
 
 
     public static void waitForElementToBeClickable(WebElement element, WebDriver driver) {
