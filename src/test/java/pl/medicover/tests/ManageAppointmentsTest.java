@@ -14,9 +14,8 @@ public class ManageAppointmentsTest extends BaseTest {
     public void searchDoctorTest() {
 
         VisitsPage visitsPage = loggedUserPage
-                .selectTab("Badania")
-                .selectSpecialization("Pobranie krwi i innych materiałów")
-                .scheduleFacilityConsulation();
+                .selectSpecialization("Badania", "Pobranie krwi i innych materiałów")
+                .selectAppointmentType("Punkt Pobrań");
 
         Assert.assertTrue(visitsPage.getSpecialization("Punkt Pobrań - dorośli").contains("Punkt Pobrań - dorośli"));
     }
@@ -32,8 +31,8 @@ public class ManageAppointmentsTest extends BaseTest {
         String assertDate = newFormatter.format(date);
 
         VisitsPage visitsPage = loggedUserPage
-                .selectSpecialization("Pobranie krwi i innych materiałów")
-                .scheduleFacilityConsulation()
+                .selectSpecialization("Badania","Pobranie krwi i innych materiałów")
+                .selectAppointmentType("Punkt Pobrań dla kobiet w ciąży")
                 .setDate(appointmentDate);
 
         String appointmentTime = visitsPage.getTime();

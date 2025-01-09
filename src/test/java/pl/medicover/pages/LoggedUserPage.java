@@ -8,12 +8,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pl.medicover.utils.SeleniumHelper;
 
+import java.util.List;
+import java.util.Objects;
+
 public class LoggedUserPage {
 
     WebDriver driver;
 
-    @FindBy(xpath = "//div[@data-testid='multiselect-spec']//div[@id='react-select-6-placeholder']/following-sibling::div/input")
-    private WebElement medicalSpecialtyInput;
+    @FindBy(xpath = "//h2[text()='Umów wizytę lub badanie']/../..")
+    private WebElement searchBox;
 
     @FindBy(xpath = "//button[@data-testid='button-appointment']")
     private WebElement searchBtn;
@@ -29,13 +32,26 @@ public class LoggedUserPage {
     public LoggedUserPage() {
     }
 
-    public LoggedUserPage selectTab(String name){
-        WebElement tab = driver.findElement(By.xpath("//button[text()='"+ name + "']"));
-        tab.click();
-        return this;
+    public Integer selectTab(String name){
+        SeleniumHelper.waitForElementToBeVisible(By.xpath("//div[text()='Wybierz specjalizację lub usługę']"), driver);
+        List<WebElement> tabs = searchBox.findElements(By.xpath("//div[@role='tablist']/button"));
+        Integer index = 1;
+        for (WebElement tab : tabs) {
+            String test = tab.getText();
+            if (Objects.equals(tab.getText(), name)) {
+                tab.click();
+                break;
+            }
+            index++;
+        }
+        return index;
     }
 
-    public DoctorPreselectPage selectSpecialization(String name) {
+    public DoctorPreselectPage selectSpecialization(String tab, String name) {
+        Integer index = selectTab(tab);
+        WebElement selectedTab = searchBox.findElement(By.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' chakra-tabs__tab-panels ')]/div[" + index.toString() + "]"));
+        WebElement medicalSpecialtyInput = selectedTab.findElement(By.xpath("//div[text()='Wybierz specjalizację lub usługę']/following-sibling::div/input"));
+        SeleniumHelper.waitForElementToBeClickable(medicalSpecialtyInput,driver);
         medicalSpecialtyInput.sendKeys(name, Keys.ENTER);
         searchBtn.click();
         return new DoctorPreselectPage(driver);
