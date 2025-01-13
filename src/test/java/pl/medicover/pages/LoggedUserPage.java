@@ -37,7 +37,6 @@ public class LoggedUserPage {
         List<WebElement> tabs = searchBox.findElements(By.xpath("//div[@role='tablist']/button"));
         Integer index = 1;
         for (WebElement tab : tabs) {
-            String test = tab.getText();
             if (Objects.equals(tab.getText(), name)) {
                 tab.click();
                 break;
@@ -47,12 +46,12 @@ public class LoggedUserPage {
         return index;
     }
 
-    public DoctorPreselectPage selectSpecialization(String tab, String name) {
-        Integer index = selectTab(tab);
+    public DoctorPreselectPage selectSpecialization(String tabName, String specializationName) {
+        Integer index = selectTab(tabName);
         WebElement selectedTab = searchBox.findElement(By.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' chakra-tabs__tab-panels ')]/div[" + index.toString() + "]"));
         WebElement medicalSpecialtyInput = selectedTab.findElement(By.xpath("//div[text()='Wybierz specjalizację lub usługę']/following-sibling::div/input"));
         SeleniumHelper.waitForElementToBeClickable(medicalSpecialtyInput,driver);
-        medicalSpecialtyInput.sendKeys(name, Keys.ENTER);
+        medicalSpecialtyInput.sendKeys(specializationName, Keys.ENTER);
         searchBtn.click();
         return new DoctorPreselectPage(driver);
     }
