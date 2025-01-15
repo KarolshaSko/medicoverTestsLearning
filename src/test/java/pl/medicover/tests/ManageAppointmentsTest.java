@@ -4,10 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.medicover.pages.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class ManageAppointmentsTest extends BaseTest {
 
     @Test
@@ -21,31 +17,27 @@ public class ManageAppointmentsTest extends BaseTest {
     }
 
     @Test
-    public void bookAppointmentTest() throws ParseException {
-
-        String appointmentDate = "24.01.2025";
-
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-//        Date date = formatter.parse(appointmentDate);
-//        SimpleDateFormat newFormatter = new SimpleDateFormat("dd/MM/yyyy");
-//        String assertDate = newFormatter.format(date);
+    public void bookAppointmentTest() {
 
         VisitsPage visitsPage = loggedUserPage
-                .selectSpecialization("Badania","Pobranie krwi i innych materiałów")
+                .selectSpecialization("Badania", "Pobranie krwi i innych materiałów")
                 .selectAppointmentType("Punkt Pobrań")
-                .setDate("31");
+                .showAllAppointments();
+//                .setDate("31");
 
         String appointmentTime = visitsPage.getTime();
         String appointmentFacility = visitsPage.getFacility();
         String appointmentSpecialization = visitsPage.getSpecialization();
 
-        BookedAppointmentConfirmationPage bookedAppointmentConfirmationPage = visitsPage.bookAppointment()
-                .confimAppointment();
+        ConfirmAppointmentPage confirmAppointmentPage = visitsPage.bookAppointment();
 
-        Assert.assertEquals(appointmentFacility,bookedAppointmentConfirmationPage.getFacilityName());
-        Assert.assertEquals(appointmentSpecialization,bookedAppointmentConfirmationPage.getSpecialization());
-        Assert.assertEquals(appointmentTime,bookedAppointmentConfirmationPage.getTime());
-//        Assert.assertEquals(assertDate,bookedAppointmentConfirmationPage.getDate());
+        Assert.assertEquals(appointmentFacility, confirmAppointmentPage.getFacilityName());
+        Assert.assertEquals(appointmentSpecialization, confirmAppointmentPage.getSpecialization());
+        Assert.assertTrue(confirmAppointmentPage.getTimeAndDate().contains(appointmentTime));
+
+        BookedAppointmentConfirmationPage bookedAppointmentConfirmationPage = confirmAppointmentPage.confimAppointment();
+
+        Assert.assertEquals(bookedAppointmentConfirmationPage.getTitle(), "Wizyta została umówiona!");
     }
 
     @Test

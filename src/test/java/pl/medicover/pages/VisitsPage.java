@@ -1,14 +1,11 @@
 package pl.medicover.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.JavascriptExecutor;
-import pl.medicover.utils.SeleniumHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,19 +14,22 @@ public class VisitsPage {
 
     WebDriver driver;
 
-    final String visitData = "//div[contains(concat(' ',normalize-space(@class),' '),'chakra-container')]/div[contains(concat(' ',normalize-space(@class),' '),'chakra-stack')]/div[2]/div[2]/div[1]/div[1]/div[1]";
+    final String visitData = "//div[contains(concat(' ',normalize-space(@class),' '),'chakra-container')]/div[contains(concat(' ',normalize-space(@class),' '),'chakra-stack')]/div[3]/div[2]/div[1]/div[last()]/div[1]";
 
-    @FindBy(xpath = visitData +"/button")
+    @FindBy(xpath = visitData + "/button")
     private WebElement visitBookBtn;
 
-    @FindBy(xpath = visitData +"/div[1]/p[1]")
+    @FindBy(xpath = visitData + "/div[1]/p[1]")
     private WebElement visitTime;
 
-    @FindBy(xpath = visitData +"/p[1]")
+    @FindBy(xpath = visitData + "/p[1]")
     private WebElement visitSpecializationAndCity;
 
-    @FindBy(xpath = visitData +"/p[2]")
+    @FindBy(xpath = visitData + "/p[2]")
     private WebElement visitFacility;
+
+    @FindBy(xpath = "//a[@data-testid='link-showAll']")
+    private WebElement showAllBtn;
 
     @FindBy(xpath = "//div[@class='react-datepicker__input-container']//input[@data-testid='input-date']")
     private WebElement datePicker;
@@ -38,7 +38,7 @@ public class VisitsPage {
     private WebElement searchBoxBtn;
 
     public VisitsPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.driver = driver;
 //        waitForLoadingToFinish();
     }
@@ -47,15 +47,15 @@ public class VisitsPage {
         return visitSpecializationAndCity.getText();
     }
 
+    public VisitsPage showAllAppointments() {
+        showAllBtn.click();
+        return this;
+    }
+
     public ConfirmAppointmentPage bookAppointment() {
         visitBookBtn.click();
         return new ConfirmAppointmentPage(driver);
     }
-
-//    private void waitForLoadingToFinish() {
-//        SeleniumHelper.waitForElementToBeVisible(By.xpath("//div[@class='blockUI blockOverlay']") ,driver);
-//        SeleniumHelper.waitForElementToNotBePresent(By.xpath("//div[@class='blockUI blockOverlay']") ,driver);
-//    }
 
     public VisitsPage setDate(String day) {
         datePicker.click();
