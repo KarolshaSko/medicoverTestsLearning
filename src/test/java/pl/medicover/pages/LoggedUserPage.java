@@ -15,6 +15,14 @@ public class LoggedUserPage {
 
     WebDriver driver;
 
+    public LoggedUserPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
+    public LoggedUserPage() {
+    }
+
     @FindBy(xpath = "//h2[text()='Umów wizytę lub badanie']/../..")
     private WebElement searchBox;
 
@@ -24,15 +32,7 @@ public class LoggedUserPage {
     @FindBy(xpath = "//button[text()='Badania']")
     private WebElement examinationTab;
 
-    public LoggedUserPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
-
-    public LoggedUserPage() {
-    }
-
-    public Integer selectTab(String name){
+    public Integer selectTab(String name) {
         SeleniumHelper.waitForElementToBeVisible(By.xpath("//div[text()='Wybierz specjalizację lub usługę']"), driver);
         List<WebElement> tabs = searchBox.findElements(By.xpath("//div[@role='tablist']/button"));
         Integer index = 1;
@@ -50,7 +50,7 @@ public class LoggedUserPage {
         Integer index = selectTab(tabName);
         WebElement selectedTab = searchBox.findElement(By.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' chakra-tabs__tab-panels ')]/div[" + index.toString() + "]"));
         WebElement medicalSpecialtyInput = selectedTab.findElement(By.xpath("//div[text()='Wybierz specjalizację lub usługę']/following-sibling::div/input"));
-        SeleniumHelper.waitForElementToBeClickable(medicalSpecialtyInput,driver);
+        SeleniumHelper.waitForElementToBeClickable(medicalSpecialtyInput, driver);
         medicalSpecialtyInput.sendKeys(specializationName, Keys.ENTER);
         searchBtn.click();
         return new DoctorPreselectPage(driver);

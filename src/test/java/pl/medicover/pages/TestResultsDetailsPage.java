@@ -9,6 +9,11 @@ public class TestResultsDetailsPage {
 
     WebDriver driver;
 
+    public TestResultsDetailsPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
     @FindBy(xpath = "//div[@class='row result-row']//div[@class='col-xs-5 col-sm-5 col-md-5']")
     private WebElement testName;
 
@@ -17,11 +22,6 @@ public class TestResultsDetailsPage {
 
     @FindBy(xpath = "//dd[text()='Lekarz:']//following-sibling::dt")
     private WebElement doctorName;
-
-    public TestResultsDetailsPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
-        this.driver = driver;
-    }
 
     public String getTestName() {
         return testName.getText();

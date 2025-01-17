@@ -8,11 +8,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.List;
-
 public class TestResultsPage {
 
     WebDriver driver;
+
+    public TestResultsPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
 
     @FindBy(id = "Criteria_StartDate")
     private WebElement datePicker;
@@ -35,15 +38,10 @@ public class TestResultsPage {
     @FindBy(xpath = "//table[@class='table table-mol ']//tr[1]//td[2]")
     private WebElement testDoctorName;
 
-    public TestResultsPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
-        this.driver = driver;
-    }
-
     public TestResultsPage setDate(String date) {
         datePicker.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
         datePicker.sendKeys(date, Keys.ENTER);
-        return  this;
+        return this;
     }
 
     public TestResultsPage setSpecialization(String name) {

@@ -11,6 +11,11 @@ public class ConfirmAppointmentPage {
 
     WebDriver driver;
 
+    public ConfirmAppointmentPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
     private final String confirmBtnXpath = "//button[@data-testid='button-book']";
 
     @FindBy(xpath = "//button[@data-testid='button-cancel']")
@@ -28,14 +33,9 @@ public class ConfirmAppointmentPage {
     @FindBy(xpath = "//p[text()='TERMIN']/../div/div/p")
     private WebElement timeAndDate;
 
-    public ConfirmAppointmentPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
-
     public BookedAppointmentConfirmationPage confimAppointment() {
         infoCheckbox.click();
-        SeleniumHelper.waitForElementToBeVisible(By.xpath(confirmBtnXpath),driver);
+        SeleniumHelper.waitForElementToBeVisible(By.xpath(confirmBtnXpath), driver);
         driver.findElement(By.xpath(confirmBtnXpath)).click();
         return new BookedAppointmentConfirmationPage(driver);
     }
@@ -45,15 +45,15 @@ public class ConfirmAppointmentPage {
         return new VisitsPage(driver);
     }
 
-    public String getSpecialization(){
+    public String getSpecialization() {
         return specialization.getText();
     }
 
-    public String getFacilityName(){
+    public String getFacilityName() {
         return facilityName.getText();
     }
 
-    public String getTimeAndDate(){
+    public String getTimeAndDate() {
         return timeAndDate.getText();
     }
 

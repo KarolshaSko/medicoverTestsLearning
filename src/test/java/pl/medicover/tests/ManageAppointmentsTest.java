@@ -43,8 +43,11 @@ public class ManageAppointmentsTest extends BaseTest {
     @Test
     public void cancelAppointmentTest() {
         loggedUserPage = new LoggedUserPage(driver);
-        MyVisitsPage myVisitsPage = new MenuPage(driver)
-                .goToCancelAppointment()
-                .cancelAppointment("Punkt Pobrań - dorośli");
+        CancelAppointmentPage cancelAppointmentPage = new MenuPage(driver)
+                .selectFromVisitsDropdown("Odwołaj wizytę") // Odwołaj wizytę , Moje wizyty , Powiadomienie o dostępności , Zapytaj lekarza//
+                .manageYourVisit("Odwołaj") // Szczegóły , Zmień termin , Odwołaj //
+                .confirmCancelVisit();
+
+        Assert.assertEquals(cancelAppointmentPage.getTitle(), "Wizyta została odwołana.");
     }
 }

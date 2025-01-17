@@ -13,16 +13,16 @@ public class StartPage {
 
     WebDriver driver;
 
+    public StartPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
     @FindBy(id = "cmpwrapper")
     private WebElement cmpWrapper;
 
     @FindBy(xpath = "//li[@class='last']//span[text()='Medicover OnLine']")
     private WebElement medicoverOnlineBtn;
-
-    public StartPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
 
     public StartPage acceptCoockie() {
         SearchContext wrapper = cmpWrapper.getShadowRoot();

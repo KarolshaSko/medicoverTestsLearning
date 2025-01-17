@@ -14,6 +14,11 @@ public class VisitsPage {
 
     WebDriver driver;
 
+    public VisitsPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
     final String visitData = "//div[contains(concat(' ',normalize-space(@class),' '),'chakra-container')]/div[contains(concat(' ',normalize-space(@class),' '),'chakra-stack')]/div[3]/div[2]/div[1]/div[last()]/div[1]";
 
     @FindBy(xpath = visitData + "/button")
@@ -36,12 +41,6 @@ public class VisitsPage {
 
     @FindBy(xpath = "//button[@data-testid='button-search']")
     private WebElement searchBoxBtn;
-
-    public VisitsPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-//        waitForLoadingToFinish();
-    }
 
     public String getSpecialization() {
         return visitSpecializationAndCity.getText();
