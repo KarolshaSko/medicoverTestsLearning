@@ -20,22 +20,19 @@ public class TestResultsPage {
     @FindBy(id = "Criteria_StartDate")
     private WebElement datePicker;
 
-    @FindBy(id = "Criteria_SpecializationId")
+    @FindBy(id = "react-select-5-placeholder")
     private WebElement specializationSelect;
 
-    @FindBy(xpath = "//button[@class='btn blue' and text()='Szukaj']")
-    private WebElement searchBtn;
+    @FindBy(xpath = "//tr[@data-testid='row-0']//button[@data-testid='row-menu'][1]")
+    private WebElement testResultItemMenu;
 
-    @FindBy(xpath = "//table[@class='table table-mol ']//tr[1]//td//a[text()='Szczegóły']")
-    private WebElement detailsBtn;
-
-    @FindBy(xpath = "//table[@class='table table-mol ']//tr[1]//td[4]")
+    @FindBy(xpath = "//tr[@data-testid='row-0']/td[4]/div/ul/li/p")
     private WebElement testName;
 
-    @FindBy(xpath = "//table[@class='table table-mol ']//tr[1]//td[1]")
+    @FindBy(xpath = "//tr[@data-testid='row-0']/td/div/p")
     private WebElement testPublicationDate;
 
-    @FindBy(xpath = "//table[@class='table table-mol ']//tr[1]//td[2]")
+    @FindBy(xpath = "//tr[@data-testid='row-0']/td[2]//p")
     private WebElement testDoctorName;
 
     public TestResultsPage setDate(String date) {
@@ -50,13 +47,9 @@ public class TestResultsPage {
         return this;
     }
 
-    public TestResultsPage confirmChosenCriteria() {
-        searchBtn.click();
-        return this;
-    }
-
-    public TestResultsDetailsPage goToTestReultDetails() {
-        detailsBtn.click();
+    public TestResultsDetailsPage goToTestResultDetails() {
+        testResultItemMenu.click();
+        driver.findElement(By.xpath("//tr[@data-testid='row-0']//button[@data-testid='row-menu-undefined']")).click();
         return new TestResultsDetailsPage(driver);
     }
 

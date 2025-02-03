@@ -1,5 +1,6 @@
 package pl.medicover.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,17 +15,14 @@ public class TestResultsDetailsPage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//div[@class='row result-row']//div[@class='col-xs-5 col-sm-5 col-md-5']")
-    private WebElement testName;
-
-    @FindBy(xpath = "//dd[text()='Data publikacji wyników:']/following-sibling::dt[1]")
+    @FindBy(xpath = "//p[text()='DATA PUBLIKACJI WYNIKU']/following-sibling::p")
     private WebElement publicationDate;
 
-    @FindBy(xpath = "//dd[text()='Lekarz:']//following-sibling::dt")
+    @FindBy(xpath = "//p[text()='Lekarz / Specjalista']/following-sibling::p")
     private WebElement doctorName;
 
-    public String getTestName() {
-        return testName.getText();
+    public Boolean assertTextExist(String name) {
+        return !driver.findElements(By.xpath("//p[text()='" + name + "']")).isEmpty();
     }
 
     public String getTestPublicationDate() {

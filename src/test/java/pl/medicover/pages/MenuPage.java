@@ -18,24 +18,24 @@ public class MenuPage {
     }
 
     @FindBy(id = "menu-button-:rk:")
-    private WebElement visitsDropdown;
+    private WebElement myVisitsDropdown;
 
-    @FindBy(xpath = "//nav[@class='header navbar navbar-inverse mol-nav']//ul[@class='navbar-nav nav']/li[5]")
-    private WebElement myHealthDropdown;
+    @FindBy(xpath = "//a[@data-testid='link-examinations']//p")
+    private WebElement myTestResultsBtn;
 
     public MyVisitsPage selectFromVisitsDropdown(String name) {
         SeleniumHelper.waitForElementToBePresent(By.id("menu-button-:rk:"), driver);
         Actions action = new Actions(driver);
-        action.moveToElement(visitsDropdown).build().perform();
+        action.moveToElement(myVisitsDropdown).build().perform();
         driver.findElement(By.xpath("//div[@id='menu-list-:rk:']//button[text()='" + name + "']")).click();
         action.moveToLocation(0, 0).build().perform();
         return new MyVisitsPage(driver);
     }
 
-    public TestResultsPage goToTestResults() {
-        Actions action = new Actions(driver);
-        action.moveToElement(myHealthDropdown).build().perform();
-        driver.findElement(By.xpath("//ul[@class='navbar-nav nav']/li/ul/li/a[text()='Wyniki badań']")).click();
+    public TestResultsPage selectTestResults() {
+//        Actions action = new Actions(driver);
+//        action.moveToElement(myTestResultsBtn).build().perform();
+        myTestResultsBtn.click();
         return new TestResultsPage(driver);
     }
 }

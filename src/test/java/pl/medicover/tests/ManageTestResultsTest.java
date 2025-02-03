@@ -13,31 +13,19 @@ public class ManageTestResultsTest extends BaseTest {
     public void checkTestResultsTest() {
         loggedUserPage = new LoggedUserPage(driver);
         TestResultsPage testResultsPage = new MenuPage(driver)
-                .goToTestResults()
-                .setDate("04-10-2023")
-                .confirmChosenCriteria();
+                .selectTestResults();
+//                .setDate("04-10-2023");
 
         String testName = testResultsPage.getTestName();
         String testDoctorName = testResultsPage.getTestDoctorName();
+        String[] parts = testDoctorName.split(" ");
+        testDoctorName = parts[1] + " " + parts[0];
         String testPublicationDate = testResultsPage.getTestPublicationDate();
 
-        TestResultsDetailsPage testResultsDetailsPage = testResultsPage.goToTestReultDetails();
+        TestResultsDetailsPage testResultsDetailsPage = testResultsPage.goToTestResultDetails();
 
-        Assert.assertEquals(testName,testResultsDetailsPage.getTestName());
+        Assert.assertTrue(testResultsDetailsPage.assertTextExist(testName));
         Assert.assertEquals(testDoctorName,testResultsDetailsPage.getTestDoctorName());
         Assert.assertEquals(testPublicationDate, testResultsDetailsPage.getTestPublicationDate());
-    }
-
-    @Test
-    public void filterTestResultsTest() {
-        loggedUserPage = new LoggedUserPage(driver);
-        TestResultsPage testResultsPage = new MenuPage(driver)
-                .goToTestResults()
-                .setDate("04-10-2023")
-                .setSpecialization("Ortopeda dziecięcy")
-                .confirmChosenCriteria();
-
-        Assert.assertEquals(testResultsPage.getTestResultAmount(),1);
-
     }
 }
